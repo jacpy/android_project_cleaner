@@ -17,7 +17,7 @@ func main() {
 	if dirs, err := ioutil.ReadDir(dir); err != nil {
 		log.Println(err)
 		return
-	} else if err := findProject(dirs); err != nil {
+	} else if err := findProject(dir, dirs); err != nil {
 		log.Println(err)
 	}
 }

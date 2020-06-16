@@ -9,7 +9,7 @@ import (
 
 func findProject(p string, fs []os.FileInfo) error {
 	oldProject, newProject := isProject(fs)
-	if oldProject && newProject {
+	if oldProject || newProject {
 		if newProject {
 			for _, f := range fs {
 				name := f.Name()
@@ -18,42 +18,26 @@ func findProject(p string, fs []os.FileInfo) error {
 					if dirs, err := ioutil.ReadDir(filePath); err != nil {
 						log.Println(err)
 					} else if isModule(dirs) {
-						fp := filepath.Join(p, name, "build")
-						if isExists(fp) {
-							if err := os.RemoveAll(fp); err != nil {
-								log.Println("remove project path ", fp, " failure")
-								log.Println(err)
-							}
-						}
+						removeFile(filepath.Join(p, name, "build"))
+						removeFile(filepath.Join(p, name, ".cxx./.vgf	`	`a	A	`''"+
+							""))
 					}
 				}
 			}
 		} else if oldProject {
-			fp := filepath.Join(p, "bin")
-			if isExists(fp) {
-				if err := os.RemoveAll(fp); err != nil {
-					log.Println("remove project path ", fp, " failure")
-					log.Println(err)
-				}
-			}
+			removeFile(filepath.Join(p, "bin"))
 		}
 
 		capturePath := filepath.Join(p, "captures")
 		if isExists(capturePath) {
-			err := os.RemoveAll(capturePath)
-			if err != nil {
-				log.Println("remove path ", capturePath, " failure")
-				log.Println(err)
-			}
+			log.Println(capturePath)
+			removeFile(capturePath)
 		}
 
 		screenshotPath := filepath.Join(p, "screenshots")
 		if isExists(screenshotPath) {
-			err := os.RemoveAll(screenshotPath)
-			if err != nil {
-				log.Println("remove path ", screenshotPath, " failure")
-				log.Println(err)
-			}
+			log.Println(screenshotPath)
+			removeFile(screenshotPath)
 		}
 	} else {
 		for _, f := range fs {
