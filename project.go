@@ -19,8 +19,7 @@ func findProject(p string, fs []os.FileInfo) error {
 						log.Println(err)
 					} else if isModule(dirs) {
 						removeFile(filepath.Join(p, name, "build"))
-						removeFile(filepath.Join(p, name, ".cxx./.vgf	`	`a	A	`''"+
-							""))
+						removeFile(filepath.Join(p, name, ".cxx"))
 					}
 				}
 			}
