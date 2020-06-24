@@ -20,11 +20,15 @@ func findProject(p string, fs []os.FileInfo) error {
 					} else if isModule(dirs) {
 						removeFile(filepath.Join(p, name, "build"))
 						removeFile(filepath.Join(p, name, ".cxx"))
+						removeFile(filepath.Join(p, name, ".externalNativeBuild"))
 					}
 				}
 			}
 		} else if oldProject {
 			removeFile(filepath.Join(p, "bin"))
+			removeFile(filepath.Join(p, "build"))
+			// jni build cache directory
+			removeFile(filepath.Join(p, "obj"))
 		}
 
 		capturePath := filepath.Join(p, "captures")
